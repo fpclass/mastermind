@@ -65,7 +65,7 @@ main = hspec $ do
         it "all codes are valid" $
             codes `shouldSatisfy` all validateCode
     describe "Game.results" $ do
-        it "results are valid" $
+        it "contain the right number of markers" $
             results `shouldSatisfy` all (
                 \(c,w) -> c+w <= pegs && c+w >= 0)
         it "has no duplicate results" $
@@ -76,7 +76,9 @@ main = hspec $ do
         prop "produces valid scores" $ \(Code code) -> \(Code guess) ->
             let (c,w) = score code guess
             in c+w <= pegs && c+w >= 0
-    describe "Game.nextGuess" $
+    describe "Game.nextGuess" $ do
+        prop "if there is only one code left, choose it" $ \(Code code) ->
+            nextGuess [code] == code
         prop "returns a valid guess" $ \cs ->
             let guess = nextGuess (map unCode cs)
             in validateCode guess && guess `elem` codes
