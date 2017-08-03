@@ -78,6 +78,6 @@ nextGuess s = undefined
 -- In other words, given the set of remaining possible codes, narrow it down
 -- to those which would produce the same score we got from the codemaker.
 eliminate :: Score -> Code -> [Code] -> [Code]
-eliminate s guess codes = undefined
+eliminate lastScore guess codes = undefined
 
 --------------------------------------------------------------------------------
