@@ -57,7 +57,7 @@ compLoop n code guess s
         printf "%d. The computer guessed correctly (%s)!\n" n guess
     | otherwise     = do
         printf "%d. The computer guessed incorrectly (%s)!\n" n guess
-        let s' = eliminate code guess s
+        let s' = eliminate (score code guess) guess s
         compLoop (n+1) code (nextGuess s') s'
 
 -- | Handles the AI's turn as codemaker.

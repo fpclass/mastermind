@@ -70,8 +70,8 @@ main = hspec $ do
                 \(c,w) -> c+w <= pegs && c+w >= 0)
         it "has no duplicate results" $
             length results `shouldBe` length (nub results)
-        it "results are exhaustive" $
-            length results `shouldBe` ((pegs+1)*(pegs+2) `div` 2)
+        it "has the right number of results" $
+            length (nub results) `shouldBe` ((pegs+1)*(pegs+2) `div` 2)
     describe "Game.score" $ do
         prop "produces valid scores" $ \(Code code) -> \(Code guess) ->
             let (c,w) = score code guess
@@ -84,6 +84,6 @@ main = hspec $ do
         prop "eliminates all options which result in a different score" $
             \(Code code) -> \(Code guess) ->
                 all ((==) (score code guess) . (score guess))
-                (eliminate code guess codes)
+                (eliminate (score code guess) guess codes)
 
 --------------------------------------------------------------------------------
