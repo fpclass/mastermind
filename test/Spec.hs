@@ -76,6 +76,8 @@ main = hspec $ do
         prop "produces valid scores" $ \(Code code) -> \(Code guess) ->
             let (c,w) = score code guess
             in c+w <= pegs && c+w >= 0
+        prop "is commutative" $ \(Code code) -> \(Code guess) ->
+            score code guess == score guess code
     describe "Game.nextGuess" $ do
         prop "if there is only one code left, choose it" $ \(Code code) ->
             nextGuess [code] == code
