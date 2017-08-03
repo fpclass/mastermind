@@ -34,6 +34,17 @@ instance Arbitrary CodeT where
 instance Show CodeT where
     show = show . unCode
 
+-- | Some code/guess pairs with expected scores.
+scoredCodes :: [(Code, Code, Score)]
+scoredCodes =
+    [ ("aaaa", "bbbb", (0,0))
+    , ("aaaa", "aaaa", (4,0))
+    , ("feec", "feee", (3,0))
+    , ("aabb", "bbaa", (0,4))
+    , ("abbb", "caab", (1,1))
+    ]
+
+-- | The main entry point to the test suite.
 main :: IO ()
 main = hspec $ do
     describe "Game.correctGuess" $ do
@@ -73,11 +84,13 @@ main = hspec $ do
         it "has the right number of results" $
             length (nub results) `shouldBe` ((pegs+1)*(pegs+2) `div` 2)
     describe "Game.score" $ do
-        prop "produces valid scores" $ \(Code code) -> \(Code guess) ->
-            let (c,w) = score code guess
-            in c+w <= pegs && c+w >= 0
         prop "is commutative" $ \(Code code) -> \(Code guess) ->
             score code guess == score guess code
+        prop "produces valid scores" $ \(Code code) -> \(Code guess) ->
+            let (c,w) = score code guess
+            in c+w <= pegs && c >= 0 && w >= 0
+        it "scores correctly" $
+            scoredCodes `shouldSatisfy` all (\(c,g,s) -> score c g == s)
     describe "Game.nextGuess" $ do
         prop "if there is only one code left, choose it" $ \(Code code) ->
             nextGuess [code] == code
