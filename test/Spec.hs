@@ -44,6 +44,18 @@ scoredCodes =
     , ("abbb", "caab", (1,1))
     ]
 
+--------------------------------------------------------------------------------
+
+-- | Counts the number of moves it takes the computer to guess the given code.
+countMoves :: Code -> Int
+countMoves code = go 1 firstGuess codes
+    where
+        go n g s | code == g = n
+                 | otherwise = let s' = eliminate (score code g) g s
+                               in go (n+1) (nextGuess s') s'
+
+--------------------------------------------------------------------------------
+
 -- | The main entry point to the test suite.
 main :: IO ()
 main = hspec $ do
@@ -102,5 +114,8 @@ main = hspec $ do
             \(Code code) -> \(Code guess) ->
                 all ((==) (score code guess) . (score guess))
                 (eliminate (score code guess) guess codes)
+    describe "Game" $ modifyMaxSuccess (const 10) $ do
+        prop "computer correctly guesses codes in five or fewer attempts" $
+            \(Code code) -> countMoves code <= 5
 
 --------------------------------------------------------------------------------
