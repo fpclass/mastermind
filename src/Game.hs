@@ -2,8 +2,8 @@
 -- Functional Programming (CS256)                                             --
 -- Coursework 1: Mastermind                                                   --
 --------------------------------------------------------------------------------
--- [Your full name]                                                           --
--- [Your full email address]                                                  --
+-- [Your full name]
+-- [Your full email address]
 --------------------------------------------------------------------------------
 
 -- | This module should contain your game code.
