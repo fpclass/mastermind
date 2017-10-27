@@ -94,7 +94,7 @@ main = hspec $ do
         it "has no duplicate results" $
             length results `shouldBe` length (nub results)
         it "has the right number of results" $
-            length (nub results) `shouldBe` ((pegs+1)*(pegs+2) `div` 2)
+            length (nub results) `shouldBe` ((pegs+1)*(pegs+2) `div` 2) - 1
     describe "Game.score" $ do
         prop "is commutative" $ \(Code code) -> \(Code guess) ->
             score code guess == score guess code
