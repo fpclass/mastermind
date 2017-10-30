@@ -115,6 +115,8 @@ main = hspec $ do
                 all ((==) (score code guess) . (score guess))
                 (eliminate (score code guess) guess codes)
     describe "Game" $ modifyMaxSuccess (const 10) $ do
+        it "correctly guesses codes in 5 or fewer attempts which are known to cause problems" $ 
+            all (<= 5) $ map countMoves ["eaea", "eaca", "eaaa"]
         prop "computer correctly guesses codes in five or fewer attempts" $
             \(Code code) -> countMoves code <= 5
 
