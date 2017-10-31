@@ -9,12 +9,9 @@
     <script language="javascript" type="text/javascript">
       {{js-flot}}
     </script>
-    <script language="javascript" type="text/javascript">
-      {{#include}}js/jquery.criterion.js{{/include}}
+    <script language="javascript" type="text/javascript" src="js/jquery.criterion.js">
     </script>
-    <style type="text/css">
-{{#include}}criterion.css{{/include}}
-    </style>
+    <style type="text/css" href="criterion.css" />
     <!--[if !IE 7]>
 	    <style type="text/css">
 		    #wrap {display:table;height:100%}
