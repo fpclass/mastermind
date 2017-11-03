@@ -106,7 +106,7 @@ main = hspec $ do
     describe "Game.nextGuess" $ do
         prop "if there is only one code left, choose it" $ \(Code code) ->
             nextGuess [code] == code
-        prop "returns a valid guess" $ \cs ->
+        prop "returns a valid guess" $ forAll (listOf1 arbitrary) $ \cs ->
             let guess = nextGuess (map unCode cs)
             in validateCode guess && guess `elem` codes
     describe "Game.eliminate" $ do
