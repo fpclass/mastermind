@@ -2,10 +2,10 @@ name:                cswk1
 version:             0.1.0.0
 -- synopsis:
 -- description:
-homepage:            https://github.com/cs256/cswk1#readme
+homepage:            https://github.com/fpclass/cswk1#readme
 author:              Michael B. Gale
 maintainer:          m.gale@warwick.ac.uk
-copyright:           2017 Michael B. Gale
+copyright:           2018 Michael B. Gale
 build-type:          Simple
 cabal-version:       >=1.10
 extra-source-files:  README.md
@@ -45,4 +45,4 @@ benchmark cswk1-bench
 
 source-repository head
   type:     git
-  location: https://github.com/cs256/cswk1
+  location: https://github.com/fpclass/cswk1

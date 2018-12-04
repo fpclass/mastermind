@@ -1,2 +1,3 @@
-# cswk1
-First coursework for CS256
+# Mastermind
+
+First coursework for CS141
