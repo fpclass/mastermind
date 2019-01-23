@@ -24,6 +24,16 @@ randomCode l xs = replicateM l randomPeg
             i <- getStdRandom $ randomR (0, length xs - 1)
             return (xs !! i)
 
+-- | `invalidCode` @size symbols@ generates an invalid code of length @size@
+-- where valid characters are represented by @symbols@.
+invalidCode :: Int -> [Symbol] -> Gen Code
+invalidCode 0    xs = return []
+invalidCode size xs = do
+    p <- elements [0..size-1]
+    is <- vectorOf (size-p) (elements ([minBound..maxBound] \\ xs))
+    vs <- vectorOf p (elements xs)
+    shuffle (is++vs)
+
 -- | Custom code type so we can have arbitrary instances of them.
 newtype CodeT   = Code   { unCode :: Code }
 
@@ -75,9 +85,10 @@ main = hspec $ do
         it "does not allow longer codes" $ do
             code <- randomCode (pegs+1) symbols
             code `shouldNotSatisfy` validateCode
-        it "does not allow invalid symbols" $ do
-            code <- randomCode pegs ([minBound..maxBound] \\ symbols)
-            code `shouldNotSatisfy` validateCode
+        prop "does not allow invalid symbols" $
+            \(Positive size) ->
+            forAll (invalidCode size symbols) $ \code ->
+            not (validateCode code)
         prop "does allow valid codes" $
             \(Code code) -> validateCode code
     describe "Game.codes" $ do
