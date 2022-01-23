@@ -1,0 +1,49 @@
+name: mastermind
+version: 2022.0.0.0
+github: "fpclass/mastermind"
+author: "Michael B. Gale"
+maintainer: "michael@fpclass.online"
+copyright: "Copyright 2022 Michael B. Gale"
+license: OtherLicense
+
+extra-source-files:
+  - README.md
+
+dependencies:
+  - base
+
+ghc-options:
+  - -Wall
+
+library:
+  source-dirs: src
+
+executables:
+  mastermind:
+    source-dirs: exe
+    main: Main.hs
+    dependencies:
+      - mastermind
+      - random
+
+tests:
+  mastermind-tests:
+    source-dirs: test
+    main: Spec.hs
+    ghc-options:
+      - -threaded
+    dependencies:
+      - mastermind
+      - tasty
+      - tasty-hedgehog
+      - tasty-hunit
+      - tasty-ant-xml
+      - hedgehog
+
+benchmarks:
+  mastermind-benchmark:
+    source-dirs: bench
+    main: Main.hs
+    dependencies:
+      - mastermind
+      - criterion
